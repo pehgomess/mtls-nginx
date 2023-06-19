@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  goapp:
+    build:
+      context: ./goapp
+      dockerfile: Dockerfile
+    image: pehgomess/goapp-hello
+    container_name: goapp
+    hostname: goapp
+    networks:
+      - lab
+    ports:
+      - 9000:9000
+
+  nginx:
+    # build:
+    #   context: ./nginx
+    #   dockerfile: Dockerfile
+    image: nginx:1.15.0-alpine
+    container_name: nginx-mtls
+    hostname: nginx-mtls
+    networks:
+      - lab
+    ports:
+      - "8443:443"
+    volumes:
+      - ./nginx/certs/ca.crt:/etc/nginx/mtls/ca.crt
+      - ./nginx/certs/server.key:/etc/nginx/certs/tls.key
+      - ./nginx/certs/server.crt:/etc/nginx/certs/tls.crt
+      - ./nginx/certs/passphrase.txt:/etc/nginx/certs/password
+      - ./nginx/config:/etc/nginx/conf.d
+    
+
+networks:
+  lab:
+    driver: bridge
+  
