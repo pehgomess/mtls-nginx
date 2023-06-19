@@ -1,4 +1,5 @@
 `docker build -t pehgomess/goapp-hello .`
+
 `docker run -p 9000:9000 pehgomess/goapp-hello`
 
 `docker build -t pehgomess/nginx-mtls .`
